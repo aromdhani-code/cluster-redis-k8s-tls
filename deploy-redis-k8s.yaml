@@ -20,10 +20,18 @@ spec:
         - name: redis-config
           configMap:
             name: redis-cm
-        - name: redis-certificates
+        - name: redis-tls
           secret:
             secretName: redis-crt
             defaultMode: 256
+        - name: redis-ca
+          secret:
+            secretName: redis-ca
+            defaultMode: 256
+        - name: redis-conf-entrypoint
+          configMap:
+            name: redis-entrypoint
+            defaultMode: 0407
       containers:
       - name: master
         image: redis:6.2-alpine
@@ -35,15 +43,21 @@ spec:
         - containerPort: 6379
         env:
         - name: REDIS_TLS_CERT_FILE
-          value: /etc/ssl/certs/redis.crt 
+          value: /etc/ssl/certs/tls.crt 
         - name: REDIS_TLS_KEY_FILE
-          value:  /etc/ssl/certs/redis.key
+          value:  /etc/ssl/certs/tls.key
         - name: REDIS_TLS_CA_FILE
-          value: /etc/ssl/certs/redis.crt
+          value: /etc/ssl/certs/ca.crt
         volumeMounts:
           - name: redis-config
             mountPath: /usr/local/etc/redis/redis-tls.conf
             subPath: redis-tls.conf
-          - name: redis-certificates
+          - name: redis-tls
             mountPath: /etc/ssl/certs
             readOnly: true
+          - name: redis-ca
+            mountPath: /etc/ssl/certs
+            readOnly: true
+          - name: redis-conf-entrypoint
+            mountPath: /usr/local/bin/docker-entrypoint.sh
+            subPath: docker-entrypoint.sh

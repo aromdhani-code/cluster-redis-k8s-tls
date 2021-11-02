@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-entrypoint
+  namespace: redis
+data:
+  redis-entrypoint.sh: |
+    #!/bin/bash
+    set -e
+    redis-server --tls-port 6378 --port 0 --tls-cert-file /etc/ssl/certs/tls.crt  --tls-key-file /etc/ssl/certs/tls.key  --tls-ca-cert-file /etc/ssl/certs/ca.crt
