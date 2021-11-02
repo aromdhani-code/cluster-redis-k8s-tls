@@ -1,0 +1,1 @@
+redis-cli  -h localhost     -p 6379  --tls  --cert redis-cluster.tlsCert --key redis-cluster.tlsCertKey  --cacert redis-cluster.tlsCACert
