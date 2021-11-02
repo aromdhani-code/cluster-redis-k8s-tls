@@ -31,14 +31,14 @@ spec:
       containers:
       - name: master
         image: redis:6.2.1-alpine
-        command: ["bin/sh"]
+        command: ["/bin/sh"]
         args: ["-c","redis-server /usr/local/etc/redis/redis-tls.conf"]
         resources:
           requests:
             cpu: 100m
             memory: 100Mi
         ports:
-        - containerPort: 6379
+        - containerPort: 6378
         env:
         - name: REDIS_TLS_CERT_FILE
           value: /etc/ssl/certs/tls.crt 
