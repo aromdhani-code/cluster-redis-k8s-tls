@@ -28,13 +28,11 @@ spec:
           secret:
             secretName: redis-ca
             defaultMode: 256
-        - name: redis-conf-entrypoint
-          configMap:
-            name: redis-entrypoint
-            defaultMode: 0407
       containers:
       - name: master
-        image: redis:6.2-alpine
+        image: redis:6.2.1-alpine
+        command: ["bin/sh"]
+        args: ["-c","redis-server /usr/local/etc/redis/redis-tls.conf"]
         resources:
           requests:
             cpu: 100m
@@ -47,7 +45,7 @@ spec:
         - name: REDIS_TLS_KEY_FILE
           value:  /etc/ssl/certs/tls.key
         - name: REDIS_TLS_CA_FILE
-          value: /etc/ssl/certs/ca.crt
+          value: /etc/ssl/ca/ca.crt
         volumeMounts:
           - name: redis-config
             mountPath: /usr/local/etc/redis/redis-tls.conf
@@ -56,8 +54,7 @@ spec:
             mountPath: /etc/ssl/certs
             readOnly: true
           - name: redis-ca
-            mountPath: /etc/ssl/certs
+            mountPath: /etc/ssl/ca/ca.crt
+            subPath: ca.crt
             readOnly: true
-          - name: redis-conf-entrypoint
-            mountPath: /usr/local/bin/docker-entrypoint.sh
-            subPath: docker-entrypoint.sh
+ 

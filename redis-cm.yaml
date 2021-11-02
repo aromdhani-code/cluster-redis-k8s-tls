@@ -6,6 +6,6 @@ data:
   redis-tls.conf: |-
     port 0
     tls-port 6379
-    tls-cert-file /etc/ssl/certs/redis.crt 
-    tls-key-file /etc/ssl/certs/redis.key
-    tls-ca-file /etc/ssl/certs/redis.crt
+    tls-cert-file /etc/ssl/certs/tls.crt 
+    tls-key-file /etc/ssl/certs/tls.key
+    tls-ca-cert-file /etc/ssl/certs/ca.crt
